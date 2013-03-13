@@ -3,8 +3,8 @@
 OTP, one time passwords, provide a way to do authentication based on a shared secret without revealing that secret on the communciation channel.
 
 Two well specified ways of generating OTPs are:
- * HOTP - An HMAC-Based One-Time Password Algorithm
- * TOTP - Time-Based One-Time Password Algorithm 
+ * HOTP - An HMAC-Based One-Time Password Algorithm, i.e. RFC 4226
+ * TOTP - Time-Based One-Time Password Algorithm , i.e. RFC 6238
 
 These are commonly used as one factor in two factor authentication
 systems.  For example Google uses these.  For example Google's
@@ -21,7 +21,9 @@ Cl-otp implements HOTP and TOTP in Common Lisp.
 ![QR Code](https://www.evernote.com/shard/s2/sh/a06dfefd-2a09-4e34-989b-3ebf421fffc0/f07c628ab49bacd1816622196521e754/res/9b7af78e-2495-4cfe-a2e2-1083fce8babe/skitch.png?resizeSmall&width=832 "otpauth://totp/test@example.com?secret=jbswy3dpehpk3pxpjbswy3dpehpk3pxp")
 
 3) Compair the values that Authenticator is generating with the ones this code generates:
+```common-lisp
   (totp:totp "48656C6C6F21DEADBEEF48656C6C6F21DEADBEEF")
+```
 
 They ought to be the same, but if your phone and computer clock are out of sync by a N seconds then every 30 seconds for N seconds they won't be the same.
 
