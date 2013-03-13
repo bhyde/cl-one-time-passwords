@@ -16,11 +16,11 @@ Cl-otp implements HOTP and TOTP in Common Lisp.
 
 # Example
 
-1) Load the code into your lisp image.
-2) Share a secret with Google's Authenticator App on your smart phone by scanning this QDR code:
-![QR Code](https://www.evernote.com/shard/s2/sh/a06dfefd-2a09-4e34-989b-3ebf421fffc0/f07c628ab49bacd1816622196521e754/res/9b7af78e-2495-4cfe-a2e2-1083fce8babe/skitch.png?resizeSmall&width=832 "otpauth://totp/test@example.com?secret=jbswy3dpehpk3pxpjbswy3dpehpk3pxp")
+1. Load the code into your lisp image.
+2. Share a secret with Google's Authenticator App on your smart phone by scanning this QDR code:
+![QR Code](https://www.evernote.com/shard/s2/sh/b6ef5d38-95d4-4f9c-9e87-2a9322e27cbc/db903985ef9ab7f7d4444854f13dc604/res/75b5ae09-a4ff-45e7-84c9-f9e5328ca567/skitch.png?resizeSmall&width=832 "otpauth://totp/test@example.com?secret=jbswy3dpehpk3pxpjbswy3dpehpk3pxp")
 
-3) Compair the values that Authenticator is generating with the ones this code generates:
+3. Compair the values that Authenticator is generating with the ones this code generates:
 ```common-lisp
   (totp:totp "48656C6C6F21DEADBEEF48656C6C6F21DEADBEEF")
 ```
