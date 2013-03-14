@@ -1,4 +1,4 @@
-(defsystem cl-otp
+(defsystem cl-one-time-passwords
   :author "Ben Hyde <bhyde@pobox.com>"
   :license "Apache 2.0"
   :description

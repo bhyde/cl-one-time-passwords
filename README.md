@@ -1,7 +1,8 @@
 # Introduction
 
-OTP, one time passwords, provide a way to do authentication based on a shared secret without revealing that
-secret to spies on the communciation channel.
+One time passwords provide a way to do authentication based on a
+shared secret without revealing that secret to spies on the
+communciation channel.
 
 Two well specified ways of generating OTPs are:
  * HOTP - An HMAC-Based One-Time Password Algorithm, i.e. RFC 4226
@@ -13,7 +14,7 @@ Authenticator App for most smart phones will generate one time
 passwords once it has been configured with the shared secret(s) for
 your account(s).
 
-Cl-otp implements HOTP and TOTP in Common Lisp.
+Cl-one-time-passwords implements HOTP and TOTP in Common Lisp.
 
 # Example
 
@@ -72,7 +73,7 @@ slots, it is in seconds.
 + Code for Google's Authenticator App is available: https://code.google.com/p/google-authenticator/
 + Check your app store for the actual application: http://support.google.com/accounts/bin/answer.py?hl=en&answer=1066447
 + Wikipedia is accumulating a list of places totp and hotp are used here: http://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm
-+ Open issues: https://github.com/bhyde/cl-otp/issues
++ Open issues: https://github.com/bhyde/cl-one-time-passwords/issues
 
 # Warning
 This code as not yet been used in production.  I look forward to reports back from the field.  :)
