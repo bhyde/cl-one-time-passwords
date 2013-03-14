@@ -1,6 +1,7 @@
 # Introduction
 
-OTP, one time passwords, provide a way to do authentication based on a shared secret without revealing that secret on the communciation channel.
+OTP, one time passwords, provide a way to do authentication based on a shared secret without revealing that
+secret to spies on the communciation channel.
 
 Two well specified ways of generating OTPs are:
  * HOTP - An HMAC-Based One-Time Password Algorithm, i.e. RFC 4226
@@ -69,7 +70,9 @@ slots, it is in seconds.
 + HOTP RFC4226 http://tools.ietf.org/html/rfc4226
 + TOTP RFC6238 http://tools.ietf.org/html/rfc6238
 + Code for Google's Authenticator App is available: https://code.google.com/p/google-authenticator/
-+ Check your app store for the actuall application. [http://support.google.com/accounts/bin/answer.py?hl=en&answer=1066447 list here].
++ Check your app store for the actual application: http://support.google.com/accounts/bin/answer.py?hl=en&answer=1066447
++ Wikipedia is accumulating a list of places totp and hotp are used here: http://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm
++ Open issues: https://github.com/bhyde/cl-otp/issues
 
 # Warning
 This code as not yet been used in production.  I look forward to reports back from the field.  :)
