@@ -2,7 +2,7 @@
 
 (defconstant .unix-epoch-zero. 2208988800)
   ;; 00:00:00 UTC on 1 January 1970
-  ;; (encode-universal-time 0 0 0 1 1 1970 0) 
+  ;; (encode-universal-time 0 0 0 1 1 1970 0)
   ;; --> 2208988800
 
 (defvar *time-zero* 0) ; aka the unix epoch zero
@@ -16,7 +16,7 @@
 
 #+nil
 (defun test-totp (&optional (verbose t))
-  (loop 
+  (loop
      with hotp:*digits* = 8
      with key-stuff = (let ((x "31323334353637383930")) ;; 10 bytes in hex
                         (concatenate 'string x x x x x  x x x x x  x x x)) ;; 130 bytes
@@ -49,9 +49,9 @@
                           (:sha512 sha512-key))
      as test-totp = (totp key-hexstring 0 time)
      as ok? = (= expected-totp test-totp)
-     when verbose do (format t "~&~A ~12D ~D/~D ~8,'0D/~8,'0D ~a" 
+     when verbose do (format t "~&~A ~12D ~D/~D ~8,'0D/~8,'0D ~a"
                              (if ok? ". " "KO")
-                             time 
+                             time
                              expected-timestep test-timestep
                              expected-totp test-totp
                              hotp:*hmac-sha-mode*)
@@ -73,16 +73,16 @@
 
 #+nil
 (defun test-make-otpauth-url ()
-  (string-equal 
+  (string-equal
    "otpauth://totp/alice@google.com?secret=JBSWY3DPEHPK3PXP"
    (let ((secret  (list (char-code #\H) (char-code #\e) (char-code #\l) (char-code #\l) (char-code #\o) (char-code #\!)
                         #xDE #xAD #xBE #xEF)))
-     (make-otpauth-url "alice@google.com" 
+     (make-otpauth-url "alice@google.com"
                        (make-array 10 :initial-contents secret)))))
 
 ;;  A test url: otpauth://totp/test@example.com?secret=jbswy3dpehpk3pxpjbswy3dpehpk3pxp
 ;;  you can make a QR code from that at <http://www.qrstuff.com/> and load it into 
 ;; Google's Authenticator.  The TOTP codes it starts generating can also be generated
-;; via (totp "48656C6C6F21DEADBEEF48656C6C6F21DEADBEEF") 
+;; via (totp "48656C6C6F21DEADBEEF48656C6C6F21DEADBEEF")
 ;; fyi (format t "~{~2,'0x~}" (coerce (cl-base32:base32-to-bytes "jbswy3dpehpk3pxpjbswy3dpehpk3pxp") 'list))
 ;; is "48656C6C6F21DEADBEEF48656C6C6F21DEADBEEF"
