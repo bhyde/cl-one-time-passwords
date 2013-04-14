@@ -20,7 +20,7 @@ Cl-one-time-passwords implements HOTP and TOTP in Common Lisp.
 
 1. Load the code into your lisp image.
 2. Share a secret with Google's Authenticator App on your smart phone by scanning this QDR code:<br/>
-![QR Code](https://www.evernote.com/shard/s2/sh/b6ef5d38-95d4-4f9c-9e87-2a9322e27cbc/db903985ef9ab7f7d4444854f13dc604/res/75b5ae09-a4ff-45e7-84c9-f9e5328ca567/skitch.png?resizeSmall&width=832 "otpauth://totp/test@example.com?secret=jbswy3dpehpk3pxpjbswy3dpehpk3pxp")
+![QR Code](http://bhyde.github.io/cl-one-time-passwords/example-otp-qdr.png)
 
 3. Compair the values that Authenticator is generating with the ones this code generates:
 ```common-lisp
