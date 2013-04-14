@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Copy of README.md of cl-one-time-password. by bhyde</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Copy of README.md of cl-one-time-password.</h1>
+        <p>One time passwords (hotp rfc4226, totp rfc6238) as used in two factor authentication systems such as Google's.</p>
+
+        <p class="view"><a href="https://github.com/bhyde/cl-one-time-passwords">View the Project on GitHub <small>bhyde/cl-one-time-passwords</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/bhyde/cl-one-time-passwords/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/bhyde/cl-one-time-passwords/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/bhyde/cl-one-time-passwords">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Introduction</h1>
+
+<p>One time passwords provide a way to do authentication based on a
+shared secret without revealing that secret to spies on the
+communciation channel.</p>
+
+<p>Two well specified ways of generating OTPs are:</p>
+
+<ul>
+<li>HOTP - An HMAC-Based One-Time Password Algorithm, i.e. RFC 4226</li>
+<li>TOTP - Time-Based One-Time Password Algorithm , i.e. RFC 6238</li>
+</ul><p>These are commonly used as one factor in two factor authentication
+systems.  For example Google uses these.  For example Google's
+Authenticator App for most smart phones will generate one time
+passwords once it has been configured with the shared secret(s) for
+your account(s).</p>
+
+<p>Cl-one-time-passwords implements HOTP and TOTP in Common Lisp.</p>
+
+<h1>Example</h1>
+
+<ol>
+<li>Load the code into your lisp image.</li>
+<li><p>Share a secret with Google's Authenticator App on your smart phone by scanning this QDR code:<br><img src="https://www.evernote.com/shard/s2/sh/b6ef5d38-95d4-4f9c-9e87-2a9322e27cbc/db903985ef9ab7f7d4444854f13dc604/res/75b5ae09-a4ff-45e7-84c9-f9e5328ca567/skitch.png?resizeSmall&amp;width=832" alt="QR Code" title="otpauth://totp/test@example.com?secret=jbswy3dpehpk3pxpjbswy3dpehpk3pxp"></p></li>
+<li>
+<p>Compair the values that Authenticator is generating with the ones this code generates:</p>
+
+<div class="highlight"><pre><span class="p">(</span><span class="nv">totp:totp</span> <span class="s">"48656C6C6F21DEADBEEF48656C6C6F21DEADBEEF"</span><span class="p">)</span>
+</pre></div>
+</li>
+</ol><p>They ought to be the same, but if your phone and computer clock are out of sync by a N seconds then every 30 seconds for N seconds they won't be the same.</p>
+
+<p>That QR encodes this URL otpauth://totp/<a href="mailto:test@example.com">test@example.com</a>?secret=jbswy3dpehpk3pxpjbswy3dpehpk3pxp
+where the secret is the base32 encoding of the secret we passed to totp:totp in step 3, there the value was a 40 character hex number, i.e. 20 bytes.</p>
+
+<h1>API</h1>
+
+<div class="highlight"><pre><span class="nv">hotp:*digits*</span>
+</pre></div>
+
+<p>The number of digits to return in the htop values, defaults to six.  See the RFC for details.</p>
+
+<div class="highlight"><pre><span class="nv">hotp:*hmac-sha-mode*</span>
+</pre></div>
+
+<p>The kind of hmac to use.  This defaults to :sha1.  You can set other values
+ironclad supports; but my testing currrently indicates it doesn't work.  This
+isn't part of the HOTP spec, but the TOTP spec extends HTOP ... even if nobody
+usest this extension.</p>
+
+<div class="highlight"><pre><span class="p">(</span><span class="nv">htop:hotp</span> <span class="nv">&lt;secret&gt;</span> <span class="nv">&lt;counter&gt;</span><span class="p">)</span>
+</pre></div>
+
+<p> is a string of 20 characters hex digits; more if your using a different hmac sha.</p>
+
+<div class="highlight"><pre><span class="nv">totp:*time-zero*</span>
+</pre></div>
+
+<p>Defaults to zero, a unix time.  See the RFC for details.</p>
+
+<div class="highlight"><pre><span class="nv">totp:*time-step-in-seconds*</span>
+</pre></div>
+
+<p>Defaults to 30, a unix time interval.  See the RFC for details.</p>
+
+<div class="highlight"><pre><span class="p">(</span><span class="nv">totp:totp</span> <span class="nv">&lt;secret&gt;</span> <span class="k">&amp;optional</span> <span class="nv">offset</span> <span class="nv">unix-time</span><span class="p">)</span>
+</pre></div>
+
+<p> as in htop:htop.  The offset defaults to zero.  The unix-time defaults
+to the current unix-time.  The offset is used to get totp values nearby times
+slots, it is in seconds.</p>
+
+<h1>See also:</h1>
+
+<ul>
+<li>HOTP RFC4226 <a href="http://tools.ietf.org/html/rfc4226">http://tools.ietf.org/html/rfc4226</a>
+</li>
+<li>TOTP RFC6238 <a href="http://tools.ietf.org/html/rfc6238">http://tools.ietf.org/html/rfc6238</a>
+</li>
+<li>Code for Google's Authenticator App is available: <a href="https://code.google.com/p/google-authenticator/">https://code.google.com/p/google-authenticator/</a>
+</li>
+<li>Check your app store for the actual application: <a href="http://support.google.com/accounts/bin/answer.py?hl=en&amp;answer=1066447">http://support.google.com/accounts/bin/answer.py?hl=en&amp;answer=1066447</a>
+</li>
+<li>Wikipedia is accumulating a list of places totp and hotp are used here: <a href="http://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm">http://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm</a>
+</li>
+<li>Open issues: <a href="https://github.com/bhyde/cl-one-time-passwords/issues">https://github.com/bhyde/cl-one-time-passwords/issues</a>
+</li>
+</ul><h1>Warning</h1>
+
+<p>This code as not yet been used in production.  I look forward to reports back from the field.  :)</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/bhyde">bhyde</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
