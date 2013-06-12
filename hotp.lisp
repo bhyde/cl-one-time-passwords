@@ -36,3 +36,18 @@
      for i from 7 downto 0
      for offset from 0 by 8
      do (setf (aref counter-bytes i) (ldb (byte 8 offset) counter))))
+
+(defvar *lookahead-window* 20)
+
+(defun verify (key-string counter hotp &optional (window *lookahead-window*))
+  "Verifies that the supplied HOTP is correct for KEY-STRING.
+A total of WINDOW counter values are checked, starting with COUNTER,
+to allow for clients wasting counter values.
+
+Returns the counter where the HOTP was correct, or NIL.
+The returned counter may be used for resyncronization."
+  (loop repeat window
+	if (= hotp (hotp key-string counter))
+	  return counter
+	else
+	  do (incf counter)))

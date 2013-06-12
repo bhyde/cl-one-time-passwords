@@ -109,6 +109,25 @@
                              hotp:*hmac-sha-mode*)
      always (or ok? not-expected-to-work)))
 
+(test hotp-verify
+  (let* ((key "48656C6C6F21DEADBEEF48656C6C6F21DEADBEEF")
+	 (hotp (hotp:hotp key 3))
+	 (hotp:*lookahead-window* 2))
+    (is (null (hotp:verify key 1 hotp)))
+    (is (= 3 (hotp:verify key 2 hotp)))))
+
+(test totp-verify
+  (let* ((key "48656C6C6F21DEADBEEF48656C6C6F21DEADBEEF")
+	 (time 1234567890)
+	 (totp (totp:totp key 0 time))
+	 (totp:*verification-window-seconds* 30))
+    (and
+     (is (null (totp:verify key totp 0 totp:*verification-window-seconds* (+ time 60))))
+     (is (= -30 (totp:verify key totp 0 totp:*verification-window-seconds* (+ time 35))))
+     (is (= -60 (totp:verify key totp -30 totp:*verification-window-seconds* (+ time 60))))
+     (is (= 0 (totp:verify key totp 0 totp:*verification-window-seconds* (+ time 20)))))))
+
+
 #+nil
 (test totp-not-working
   "based on examples in the RFC"
