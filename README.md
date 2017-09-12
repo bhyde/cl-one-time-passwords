@@ -44,11 +44,11 @@ hotp:*hmac-sha-mode*
 ```
 The kind of hmac to use.  This defaults to :sha1.  You can set other values
 ironclad supports; but my testing currrently indicates it doesn't work.  This
-isn't part of the HOTP spec, but the TOTP spec extends HTOP ... even if nobody
+isn't part of the HOTP spec, but the TOTP spec extends HOTP ... even if nobody
 usest this extension.
 
 ```common-lisp
-(htop:hotp <secret> <counter>)
+(hotp:hotp <secret> <counter>)
 ```
 <secret> is a string of 20 characters hex digits; more if your using a different hmac sha.
 ```common-lisp
@@ -63,7 +63,7 @@ Defaults to 30, a unix time interval.  See the RFC for details.
 ```common-lisp
 (totp:totp <secret> &optional offset unix-time)
 ```
-<secret> as in htop:htop.  The offset defaults to zero.  The unix-time defaults
+<secret> as in hotp:hotp.  The offset defaults to zero.  The unix-time defaults
 to the current unix-time.  The offset is used to get totp values nearby times
 slots, it is in seconds.
 
