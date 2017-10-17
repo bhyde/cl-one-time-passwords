@@ -14,6 +14,25 @@
 (defun totp (key-hexstring &optional (offset 0) (time (- (get-universal-time) .unix-epoch-zero. offset)))
   (hotp:hotp key-hexstring (time-step time)))
 
+(defvar *verification-window-seconds* *time-step-in-seconds*) ; One timeslot each way
+
+(defun verify (key-hexstring totp &optional (initial-offset 0) (window *verification-window-seconds*) (time-now (- (get-universal-time) .unix-epoch-zero.)))
+  "Verifies that the supplied TOTP is the correct code, using
+a time window of *VERIFICATION-WINDOW-SECONDS* seconds on
+each side of TIME-NOW adusted by INITIAL-OFFSET.
+
+Returns as primary value the offset from TIME-NOW where the
+TOTP was correct, or NIL.  The returned offset may be used
+for resyncronization.  The secondary return value is the
+time-step value used for the TOTP verification, which can be
+used to prevent replay attacks."
+  (let ((window-offsets (loop for past-offset   downfrom (- initial-offset *time-step-in-seconds*) to (- initial-offset window) by *time-step-in-seconds*
+			      and future-offset from     (+ initial-offset *time-step-in-seconds*) to (+ initial-offset window) by *time-step-in-seconds*
+			      collect past-offset
+			      collect future-offset)))
+    (loop for offset in (list* initial-offset window-offsets)
+	  if (= totp (totp key-hexstring nil (+ time-now offset)))
+	    return (values offset (time-step (+ time-now offset))))))
 
 ;;;; otpauth urls' you'd need to ahve cl-base32 loaded for these to work
 

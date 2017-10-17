@@ -5,11 +5,15 @@
   (:use "COMMON-LISP")
   (:export "*DIGITS*"
            "*HMAC-SHA-MODE*"
-           "HOTP"))
+	   "*LOOKAHEAD-WINDOW*"
+           "HOTP"
+	   "VERIFY"))
 
 (defpackage "CL-TOTP"
   (:nicknames "TOTP")
   (:use "COMMON-LISP")
   (:export "*TIME-ZERO*"
-           "*TIME-STEP-IN-SECONDS*" 
-           "TOTP"))
+           "*TIME-STEP-IN-SECONDS*"
+	   "*VERIFICATION-WINDOW-SECONDS*"
+           "TOTP"
+	   "VERIFY"))
