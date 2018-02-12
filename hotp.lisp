@@ -20,9 +20,11 @@
              (setf (ldb (byte 8  0) result) (aref ht (+ 3 byte-offset)))
              result)))
     (let ((sbits (dt 20-bytes)))
-      (mod sbits
-           (svref #(1 10 100 1000 10000 100000 1000000 10000000 100000000)
-                  *digits*)))))
+      (format nil
+              (format nil "~~~A,'0D" *digits*)
+              (mod sbits
+                   (svref #(1 10 100 1000 10000 100000 1000000 10000000 100000000)
+                          *digits*))))))
 
 (defun hmac-sha-n (key-string counter)
   (loop
